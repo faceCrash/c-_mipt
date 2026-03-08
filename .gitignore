@@ -1,0 +1,25 @@
+# Binaries
+[0-9]*_[0-9]*
+sol01_global_printer
+test
+!*.cpp
+!*.h
+!*.hpp
+!*.c
+!*.txt
+!*.json
+!*.md
+!*.gitignore
+
+# Debug symbols
+*.dSYM/
+
+# VS Code
+.vscode/
+
+# OS generated files
+.DS_Store
+
+# Archives
+*.zip
+*.tar.gz
