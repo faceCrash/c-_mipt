@@ -2,6 +2,7 @@
 #include <cmath>
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 
 int binary_log_int(int val) {
   if (val <= 0) {
@@ -48,8 +49,11 @@ int binary_log_float(float val) {
 
     return -149 + highest_bit;
   } else {
+    // No need to put this inside else
     return static_cast<int>(exponent) - 127;
   }
+  
+  // Function does not have a default return value, bad c++ practice
 }
 
 int main() {
@@ -81,6 +85,45 @@ int main() {
   assert(binary_log_float(denorm2) == -149);
 
   std::cout << "Float binary locarithm tests passed!\n";
+	
+	
+	/*
+     * There is no penalty for not having this,
+     * This was added just to double check.
+     */
+     
+    std::vector<double> vector_double
+    {
+		3.145293e-40,
+		3.145293e-25,
+		3.145293e-2,
+		3.145293e2,
+		3.145293e4,
+		3.145293e35,
+		5.4210109e-20,
+		0.25,
+		1,
+		1024,
+		1.8446744e+19
+	};
+	
+	std::vector<float> vector_float;
+	for(const auto x_double: vector_double)
+	{
+		vector_float.push_back(x_double);
+	}
+	
+	for(const auto x_float: vector_float)
+	{
+		const int answer_custom = binary_log_float(x_float);
+		const int answer_std = std::floor(std::log2(x_float));
+		
+		std::cout << (answer_custom == answer_std ? "passed" : "failed") << " " << x_float << std::endl;
+		std::cout << "custom = " << answer_custom << ", std-ans = " << answer_std << "\n" << std::endl;
+	}
+
 
   return 0;
 }
+
+// Score is 9/10 

@@ -140,13 +140,23 @@ void demonstrate_exceptions() {
               << " (Причина: нехватка памяти или запрос на выделение слишком "
                  "большого блока памяти).\n";
   }
-
+  catch (const std::exception& e)
+  {
+	  std::cerr << "Caught  v.reserve(-1): " << e.what() << "\n";
+  }
+  /*
+   * Because, your code was exiting here without (const std::exception& e)
+   * 
+   * And anyway,
+   * For everything else, you need to add
+   * catch (const std::exception& e)
+   */
+    
   try {
     std::variant<int, double> var = 42;
     std::get<double>(var);
   } catch (const std::bad_variant_access &e) {
-    std::cerr
-        << "Caught std::bad_variant_access: " << e.what()
+    std::cerr << "Caught std::bad_variant_access: " << e.what()
         << " (Причина: обращение к неактивному типу варианта std::variant).\n";
   }
 
@@ -184,11 +194,11 @@ int main() {
   try {
     demonstrate_exceptions();
 
-    Rational valid(1, 2);
-    std::cerr << "Rational(1, 2) is valid\n";
+   Rational valid(1, 2);
+   std::cerr << "Rational(1, 2) is valid\n";
 
-    Rational invalid(1, 0);
-    std::cerr << "Эта строка не напечатается\n";
+   Rational invalid(1, 0);
+   std::cerr << "Эта строка не напечатается\n";
   } catch (const Exception &e) {
     std::cerr << "Caught custom Exception: " << e.what() << '\n';
   } catch (const std::exception &e) {
@@ -199,3 +209,10 @@ int main() {
 
   return 0;
 }
+
+/*
+ * 1. when compiled and executed, the code exited without printing anything after v.reserve(-1);
+ * 2. catch (const std::exception& e) was not added in sequence for all the std_demonstration
+ * 
+ * the score is 8/10
+ */
