@@ -1,0 +1,78 @@
+/////////////////////////////////////////////////
+
+// chapter : Basics of Programming
+
+/////////////////////////////////////////////////
+
+// section : Operators and Expressions
+
+/////////////////////////////////////////////////
+
+// content : Arithmetic Operators
+//
+// content : Arithmetic Operators with Assignment
+//
+// content : Postfix and Prefix Operators
+//
+// content : Comparison Operators
+
+/////////////////////////////////////////////////
+
+#include <cassert>
+
+/////////////////////////////////////////////////
+
+int main()
+{
+	auto x = 1, y = 2;
+
+//  -----------------------
+
+	assert((x +  y) == +3);
+	
+	assert((x -  y) == -1);
+
+	assert((x *  y) == +2);
+
+	assert((x /  y) == +0);
+
+	assert((x %  y) == +1);
+
+//  -----------------------
+
+	assert((x += y) == +3);
+
+	assert((x -= y) == +1);
+
+	assert((x *= y) == +2);
+
+	assert((x /= y) == +1);
+
+	assert((x %= y) == +1);
+
+//  -----------------------
+
+	assert((x ++  ) == +1);
+
+	assert((x --  ) == +2);
+
+	assert((  ++ y) == +3);
+
+	assert((  -- y) == +2);
+
+//  -----------------------
+
+	assert((x <  y) ==  1);
+
+	assert((x >  y) ==  0);
+
+	assert((x <= y) ==  1);
+
+	assert((x >= y) ==  0);
+
+	assert((x == y) ==  0);
+
+	assert((x != y) ==  1);
+}
+
+/////////////////////////////////////////////////

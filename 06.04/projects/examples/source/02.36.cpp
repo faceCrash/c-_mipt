@@ -1,0 +1,60 @@
+////////////////////////////////////////////////////////////////
+
+// chapter : Basics of Programming
+
+////////////////////////////////////////////////////////////////
+
+// section : Functions and Algorithms
+
+////////////////////////////////////////////////////////////////
+
+// content : Functions
+//
+// content : Function Declarations
+//
+// content : Parameters and Arguments
+//
+// content : Statement return
+//
+// content : Return Type Inference
+//
+// content : Attribute [[nodiscard]]
+//
+// content : Object std::ignore
+
+////////////////////////////////////////////////////////////////
+
+#include <tuple>
+#include <type_traits>
+
+////////////////////////////////////////////////////////////////
+
+[[nodiscard]] auto test(int x);
+
+////////////////////////////////////////////////////////////////
+
+[[nodiscard]] auto test(int x)
+{
+	return x;
+}
+
+////////////////////////////////////////////////////////////////
+
+int main()
+{
+    static_assert(std::is_same_v < decltype(test), int(int) > );
+
+//  ------------------------------------------------------------
+
+//	test(1); // error
+
+//  ------------------------------------------------------------
+
+    [[maybe_unused]] auto x = test(1);
+
+//  ------------------------------------------------------------
+
+    std::ignore = test(1);
+}
+
+////////////////////////////////////////////////////////////////

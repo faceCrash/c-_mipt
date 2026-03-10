@@ -1,0 +1,66 @@
+////////////////////////////////////////////////////////
+
+// chapter : Data Structures
+
+////////////////////////////////////////////////////////
+
+// section : Associative Containers
+
+////////////////////////////////////////////////////////
+
+// content : Associative Containers
+//
+// content : Containers std::map and std::multimap
+//
+// content : In-Place Constructors
+//
+// content : Object std::piecewise_construct
+//
+// content : Function std::forward_as_tuple
+
+////////////////////////////////////////////////////////
+
+#include <map>
+#include <string>
+#include <tuple>
+#include <utility>
+
+////////////////////////////////////////////////////////
+
+int main()
+{
+	std::map < int, std::string > map;
+
+//  ----------------------------------------------------
+
+	map[1] = "aaaaa";
+
+//  ----------------------------------------------------
+
+	map.emplace(std::make_pair(2, std::string(5, 'a')));
+
+//  ----------------------------------------------------
+	
+	map.emplace(3, std::string(5, 'a'));
+
+//  ----------------------------------------------------
+
+//	map.emplace(4, 5, 'a'); // error
+
+//  ----------------------------------------------------
+	
+	map.emplace
+	(
+		std::piecewise_construct, 
+			
+		std::forward_as_tuple(5), 
+		
+		std::forward_as_tuple(5, 'a')
+	);
+
+//  ----------------------------------------------------
+
+	map.try_emplace(6, 5, 'a');
+}
+
+////////////////////////////////////////////////////////

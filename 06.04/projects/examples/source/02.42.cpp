@@ -1,0 +1,56 @@
+/////////////////////////////////////////////////////////////////
+
+// chapter : Basics of Programming
+
+/////////////////////////////////////////////////////////////////
+
+// section : Functions and Algorithms
+
+/////////////////////////////////////////////////////////////////
+
+// content : Inline Functions
+//
+// content : Function Specifier inline
+//
+// content : Attribute [[noinline]]
+//
+// content : Special Memory
+//
+// content : Type Qualifier volatile
+
+/////////////////////////////////////////////////////////////////
+
+#include <cassert>
+
+/////////////////////////////////////////////////////////////////
+
+inline auto max_v1(int x, int y)
+{ 
+	return x > y ? x : y;
+}
+
+/////////////////////////////////////////////////////////////////
+
+__attribute__((noinline)) auto max_v2(int x, int y)
+{
+	return x > y ? x : y;
+}
+
+/////////////////////////////////////////////////////////////////
+
+int main()
+{
+	auto volatile x = 1, y = 2;
+
+//  -------------------------------------------------------------
+
+	assert(max_v1(x, y) == 2); // support : compiler-explorer.com
+
+	assert(max_v2(x, y) == 2); // support : compiler-explorer.com
+
+	assert(max_v1(1, 2) == 2); // support : compiler-explorer.com
+
+	assert(max_v2(1, 2) == 2); // support : compiler-explorer.com
+}
+
+/////////////////////////////////////////////////////////////////

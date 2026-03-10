@@ -1,0 +1,61 @@
+////////////////////////////////////////////////////////////////////////////
+
+// chapter : Number Processing
+
+////////////////////////////////////////////////////////////////////////////
+
+// section : Chrono Management
+
+////////////////////////////////////////////////////////////////////////////
+
+// content : Time Points
+//
+// content : Type std::chrono::time_point
+//
+// content : Function std::chrono::floor
+//
+// content : Type Alias std::chrono::days
+//
+// content : Formatting Dates and Times
+//
+// content : Unix Time
+//
+// content : Function std::time
+//
+// content : Y2038 Problem
+
+////////////////////////////////////////////////////////////////////////////
+
+#include <cassert>
+#include <chrono>
+#include <ctime>
+#include <print>
+
+////////////////////////////////////////////////////////////////////////////
+
+int main()
+{
+	std::chrono::time_point < std::chrono::system_clock > epoch;
+
+//  ------------------------------------------------------------------------
+
+	auto now = std::chrono::system_clock::now();
+
+//  ------------------------------------------------------------------------
+
+	std::print("main : now = {:%Y %B %d %H:%M:%S %Z}\n", now);
+
+//  ------------------------------------------------------------------------
+
+	auto delta = std::chrono::floor < std::chrono::days > (now - epoch);
+
+//  ------------------------------------------------------------------------
+
+	std::print("main : delta = {} (days)\n", delta.count());
+
+//  ------------------------------------------------------------------------
+
+	assert(std::chrono::system_clock::to_time_t(now) == std::time(nullptr));
+}
+
+////////////////////////////////////////////////////////////////////////////

@@ -1,0 +1,90 @@
+////////////////////////////////////////////////////////
+
+// chapter : Introduction and Overview
+
+////////////////////////////////////////////////////////
+
+// section : Standard Library Overview
+
+////////////////////////////////////////////////////////
+
+// content : Standard Library Overview
+//
+// content : Using Libraries
+//
+// content : Directive #include
+//
+// content : Namespace std
+//
+// content : Declaration using
+//
+// content : Function main
+//
+// content : Naming Conventions
+//
+// content : Single-Line and Multi-Line Comments
+//
+// content : Service Doxygen
+
+////////////////////////////////////////////////////////
+
+// support : www.doxygen.nl
+
+////////////////////////////////////////////////////////
+
+#include <cassert>
+#include <cmath>
+#include <iostream>
+#include <numbers>
+#include <print>
+#include <string>
+#include <vector>
+
+////////////////////////////////////////////////////////
+
+// using namespace std; // bad
+
+////////////////////////////////////////////////////////
+
+int main()
+{
+	int x = 0;
+
+//  ----------------------------------------------------
+
+	std::print("main : enter int x : "); std::cin >> x;
+
+//  ----------------------------------------------------
+
+	std::print("main : x = {}\n", x);
+
+//  ----------------------------------------------------
+
+	assert(std::abs(std::sin(std::numbers::pi)) < 1e-6);
+
+//  ----------------------------------------------------
+
+	std::string string = "aaaaa";
+
+//  ----------------------------------------------------
+
+	assert(string.append("bbbbb").substr(4, 2) == "ab");
+
+//  ----------------------------------------------------
+
+	std::vector < int > vector = { 1, 2, 3, 4, 5 };
+
+//  ----------------------------------------------------
+
+	vector.push_back(1);
+
+//  ----------------------------------------------------
+
+	assert(std::size(vector) == 6 && vector.at(5) == 1);
+
+//  ----------------------------------------------------
+
+	return 0;
+}
+
+////////////////////////////////////////////////////////

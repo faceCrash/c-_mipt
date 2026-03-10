@@ -1,0 +1,28 @@
+/////////////////////////////////////
+
+// chapter : Basics of Programming
+
+/////////////////////////////////////
+
+// section : Types and Variables
+
+/////////////////////////////////////
+
+// content : Constant Objects
+//
+// content : Type Qualifier const
+//
+// content : Magic Numbers
+
+/////////////////////////////////////
+
+int main()
+{
+    [[maybe_unused]] int const x = 1;
+
+//  ---------------------------------
+
+//	x = 2; // error
+}
+
+/////////////////////////////////////
