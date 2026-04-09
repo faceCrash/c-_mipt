@@ -3,10 +3,11 @@
 #include <iterator>
 #include <algorithm>
 #include <functional>
+#include <cmath>
 
 /**
- * @brief Partition function using iterators.
- * Uses the last element as pivot.
+ * @brief Item 11.03 (11.10): Flexible QuickSort with custom comparators.
+ * Partition function using iterators.
  */
 template<typename Iter, typename Compare = std::less<typename std::iterator_traits<Iter>::value_type>>
 Iter partition_iter(Iter first, Iter last, Compare comp = Compare()) {
@@ -36,25 +37,43 @@ void quickSort_iter(Iter first, Iter last, Compare comp = Compare()) {
     }
 }
 
+/**
+ * @brief User-defined free function for comparison (descending order).
+ */
+bool compare_descending(int a, int b) {
+    return a > b;
+}
+
 int main() {
+    std::cout << "--- Task 11.03 ---" << std::endl;
+    
     std::vector<int> arr = {34, 7, 23, 32, 5, 62, 32, 7, 0};
 
     std::cout << "Original vector: ";
     for (int x : arr) std::cout << x << " ";
+    std::cout << "\n\n";
+
+    // 1. Using standard functional object std::less
+    std::vector<int> arr1 = arr;
+    quickSort_iter(arr1.begin(), arr1.end(), std::less<int>());
+    std::cout << "1. Sorted with std::less:             ";
+    for (int x : arr1) std::cout << x << " ";
     std::cout << "\n";
 
-    quickSort_iter(arr.begin(), arr.end());
-
-    std::cout << "Sorted vector:   ";
-    for (int x : arr) std::cout << x << " ";
+    // 2. Using user-defined free function (descending)
+    std::vector<int> arr2 = arr;
+    quickSort_iter(arr2.begin(), arr2.end(), compare_descending);
+    std::cout << "2. Sorted with free function (desc):  ";
+    for (int x : arr2) std::cout << x << " ";
     std::cout << "\n";
 
-    // Works with std::array as well
-    int c_arr[] = {10, -1, 5, 2, 0};
-    quickSort_iter(std::begin(c_arr), std::end(c_arr));
-    
-    std::cout << "Sorted C array:  ";
-    for (int x : c_arr) std::cout << x << " ";
+    // 3. Using lambda function (absolute value sorting)
+    std::vector<int> arr3 = {10, -5, 20, -30, 0, 5};
+    quickSort_iter(arr3.begin(), arr3.end(), [](int a, int b) {
+        return std::abs(a) < std::abs(b);
+    });
+    std::cout << "3. Absolute sort with lambda:         ";
+    for (int x : arr3) std::cout << x << " ";
     std::cout << "\n";
 
     return 0;
