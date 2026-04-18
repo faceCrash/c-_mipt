@@ -59,7 +59,7 @@ private:
       return;
 
     std::cout << node->value << " ";
-    dfs_preorder(node->left);
+    dfs_preorder(node->left); // Use std::stack, recursion can cause stack overflow in big trees
     dfs_preorder(node->right);
   }
 };
@@ -102,3 +102,5 @@ int main() {
 
   return 0;
 }
+
+// Score is 9/10

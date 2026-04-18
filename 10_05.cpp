@@ -141,7 +141,7 @@ int main() {
     dataset.reserve(n);
     for (int i = 0; i < n; ++i) {
 
-      dataset.push_back("prefix_" + std::to_string(i) + "_suffix");
+      dataset.push_back("prefix_" + std::to_string(i) + "_suffix"); // You are supposed to use the https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.42.cpp template
     }
     run_test(funcs, dataset);
   }
@@ -160,3 +160,21 @@ int main() {
 
   return 0;
 }
+
+/*
+ 
+ * 
+ * The task says:
+ * 1. You need to export the experiment data as csv or .txt
+ * 2. read the data.txt by python, add the python code to the repo
+ * 3. use python to generate plot.png
+ *  The task says "Постройте графики зависимости количества возникающих коллизий"
+ * 
+ * 4. Your string is supposed to be random, using the <random> library not numbers
+ * 5. Use string generator template from https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.42.cpp
+ * 
+ * 
+ * 
+ * Score is 3/10
+ * You can improve and change to 8/10, if you want.
+ */
