@@ -1,7 +1,9 @@
 #include <cmath>
 #include <cstdint>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
+#include <random>
 #include <string>
 #include <unordered_set>
 #include <vector>
@@ -104,77 +106,57 @@ struct HashInfo {
   HashFunc func;
 };
 
-void run_test(const std::vector<HashInfo> &funcs,
-              const std::vector<std::string> &data) {
-  std::cout << std::setw(10) << "Data Size" << " | " << std::setw(10)
-            << "Function" << " | Collisions" << std::endl;
-  std::cout << "------------------------------------------" << std::endl;
-  for (const auto &info : funcs) {
-    std::unordered_set<uint32_t> seen;
-    int collisions = 0;
-    for (const auto &s : data) {
-      uint32_t h = info.func(s.c_str(), (uint32_t)s.length());
-      if (!seen.insert(h).second) {
-        collisions++;
-      }
+std::vector<std::string> make_strings(size_t size_1, size_t size_2) {
+  auto engine = std::mt19937{std::random_device{}()};
+  auto dist = std::uniform_int_distribution<int>{'a', 'z'};
+  auto result = std::vector<std::string>{};
+  result.reserve(size_1);
+  for (size_t i = 0; i < size_1; ++i) {
+    auto string = std::string(size_2, ' ');
+    for (size_t j = 0; j < size_2; ++j) {
+      string[j] = static_cast<char>(dist(engine));
     }
-    std::cout << std::setw(10) << data.size() << " | " << std::setw(10)
-              << info.name << " | " << collisions << std::endl;
+    result.push_back(string);
   }
-  std::cout << std::endl;
+  return result;
 }
 
 int main() {
-  std::cout << "Task 10.05: Hash Function Collision Analysis (32-bit mock)"
-            << std::endl
-            << std::endl;
-
   std::vector<HashInfo> funcs = {
       {"RS", RSHash},   {"JS", JSHash},     {"PJW", PJWHash},
       {"ELF", ELFHash}, {"BKDR", BKDRHash}, {"SDBM", SDBMHash},
       {"DJB", DJBHash}, {"DEK", DEKHash},   {"AP", APHash}};
 
-  std::vector<int> sizes = {1000, 10000, 50000, 100000};
+  std::vector<int> sizes = {1000, 5000, 10000, 20000, 50000, 75000, 100000};
+  std::ofstream csv("collision_results.csv");
+
+  csv << "Size";
+  for (const auto &info : funcs) {
+    csv << "," << info.name;
+  }
+  csv << "\n";
 
   for (int n : sizes) {
-    std::vector<std::string> dataset;
-    dataset.reserve(n);
-    for (int i = 0; i < n; ++i) {
+    std::cout << "Processing size: " << n << "..." << std::endl;
+    auto dataset = make_strings(n, 10);
+    csv << n;
 
-      dataset.push_back("prefix_" + std::to_string(i) + "_suffix"); // You are supposed to use the https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.42.cpp template
+    for (const auto &info : funcs) {
+      std::unordered_set<uint32_t> seen;
+      int collisions = 0;
+      for (const auto &s : dataset) {
+        uint32_t h = info.func(s.c_str(), (uint32_t)s.length());
+        if (!seen.insert(h).second) {
+          collisions++;
+        }
+      }
+      csv << "," << collisions;
     }
-    run_test(funcs, dataset);
+    csv << "\n";
   }
 
-  std::cout << "Conclusion:" << std::endl;
-  std::cout << "- Best functions (0 collisions): BKDR, DJB, AP (high "
-               "distribution quality)."
-            << std::endl;
-  std::cout << "- Susceptible functions: ELF, PJW (may show more collisions on "
-               "specific patterns due to logic)."
-            << std::endl;
-  std::cout
-      << "- The number of collisions is expected to remain near zero for N << "
-         "2^16 due to the Birthday paradox property of 32-bit hashes."
-      << std::endl;
+  csv.close();
+  std::cout << "\nResults exported to collision_results.csv" << std::endl;
 
   return 0;
 }
-
-/*
- 
- * 
- * The task says:
- * 1. You need to export the experiment data as csv or .txt
- * 2. read the data.txt by python, add the python code to the repo
- * 3. use python to generate plot.png
- *  The task says "Постройте графики зависимости количества возникающих коллизий"
- * 
- * 4. Your string is supposed to be random, using the <random> library not numbers
- * 5. Use string generator template from https://github.com/i-s-m-mipt/Education/blob/master/projects/examples/source/10.42.cpp
- * 
- * 
- * 
- * Score is 3/10
- * You can improve and change to 8/10, if you want.
- */
