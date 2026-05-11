@@ -1,0 +1,3 @@
+widen aaaaa aaaaa
+narrow aaaaa aaaaa
+utf ааааа
